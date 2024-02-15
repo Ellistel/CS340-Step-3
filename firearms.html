@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Yudelson</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href = "customers.html">Customers</a>
+        <a href="ffls.html">FFLS</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="transactionsandfirearms.html">Transactions and Firearms</a>
+
+    </nav>
+    <section>
+        <form id="firearminsert" class="firearmforms">
+            <legend>Insert Firearm</legend>
+            <label for="price">Price:</label>
+            <input type="number" id="price" required name="price" step="0.01"><br><br>
+            <label for="model">Model:</label>
+            <input type="text" id="model" required name="model"><br><br>
+            <label for="inventory">Inventory Count:</label>
+            <input type="number" id="inventory" required name="inventory"><br><br>
+            <label for="country">Country Of Origin:</label>
+            <input type="text" id="country" required name="country"><br><br>
+            <label for="caliber">Caliber:</label>
+            <input type="text" id="caliber" required name="caliber"><br><br>
+            <label for="historicDetail">Historic Detail:</label>
+            <input type="text" id="historicDetail" name="historicDetail"><br><br>
+            <input type="submit">
+        </form>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th>Inventory Count</th>
+                <th>Country Of Origin</th>
+                <th>Caliber</th>
+                <th>Historic Detail</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td> <!--ID-->
+                <td></td> <!--Model-->
+                <td></td> <!--Price-->
+                <td></td> <!--Inventory Count-->
+                <td></td> <!--Country Of Origin-->
+                <td></td> <!--Caliber-->
+                <td></td> <!--Historic Detail-->
+                <td>
+                    <button>Update</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            <!-- Add more rows here -->
+        </tbody>
+    </table>
+</body>
+</html>

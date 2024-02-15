@@ -1,0 +1,29 @@
+nav{
+    border:solid;
+    background-color: blue;
+    padding: 10px;
+    border-radius: 3px;
+}
+nav a{
+    border: solid;
+    border-radius: 3px;
+    padding: 10px;
+    margin:20px 0;
+    background-color: gray;
+    color:blue;
+    cursor:pointer;
+}
+
+nav a:hover{
+    background-color: black;
+}
+
+form{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: solid;
+    border-radius: 3px;
+}
+
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Yudelson</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="customers.html">Customers</a>
+        <a href="transactions.html">Transactions</a>
+        <a href = "firearms.html">Firearms</a>
+        <a href="transactionsandfirearms.html">Transactions and Firearms</a>
+
+    </nav>
+    <section>
+        <form id="fflsinsert" class="fflsforms">
+            <legend>Insert FFLS</legend>
+            <label for="fname">FFL Name:</label>
+            <input type="text" id="fname" required name="fname"><br><br>
+            <label for="fcontact">Contact Information:</label>
+            <input type="text" id="fcontact" required name="fcontact"><br><br>
+            <input type="submit">
+        </form>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FFL Name</th>
+                <th>FFL Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>  <!--ID -->
+                <td></td>   <!--Name -->
+                <td></td> <!--ID - Contact -->
+                <td>
+                    <button>Update</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            <!-- Add more rows here-->
+        </tbody>
+    </table>
+</body>
+</html>
