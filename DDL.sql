@@ -65,7 +65,7 @@ INSERT INTO `FFLs`(`fflName`,`fflContact`) VALUES
 
 INSERT INTO `Transactions`(`customerID`, `fflicenseID`, `saleAmount`, `saleDate`) VALUES
 (1,1,1550.00,'2023-08-02'),
-(4,2,949.99,'2023-08-04'),
+(1,2,949.99,'2023-08-04'),
 (3,3,500.00,'2025-01-02');
 
 INSERT INTO `Firearms`(`price`, `model`, `countryOfOrigin`, `caliber`, `historicDetail`, `inventoryStock`) VALUES

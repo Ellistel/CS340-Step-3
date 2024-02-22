@@ -9,15 +9,17 @@
 </head>
 <body>
     <nav>
+        <img src="RTI_Logo.png" alt="RTI_Logo" class = "logo">
         <a href="index.html">Home</a>
         <a href="customers.html">Customers</a>
         <a href="ffls.html">FFLS</a>
-        <a href="firearms.html">Firearms</a>
+        <a href = "firearms.html">Firearms</a>
+        <a href="transactions.html">Transactions</a>
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
 
     </nav>
     <section>
-        <form id="transactionInsert" class="transactionForms">
+        <form id="transactionInsert" class="forms">
             <legend>Insert Transaction</legend>
             <label for="fflID">FFL ID:</label>
             <select id="fflID" name="fflID">
@@ -41,28 +43,53 @@
         <thead>
             <tr>
                 <th>Transaction ID</th>
-                <th>FFL ID</th>
                 <th>Customer ID</th>
+                <th>FFL ID</th>
                 <th>Sale Amount</th>
                 <th>Sale Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td> <!--Transaction ID-->
-                <td></td> <!--FFL ID-->
-                <td></td> <!--Customer ID-->
-                <td></td> <!--Sale Amount-->
-                <td></td> <!--Sale Date-->
-                <td>
-                    <button>Update</button>
-                    <button>Delete</button>
-                </td>
-            </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>$1550.00</td>
+                    <td>2023-08-02</td>
+                    <td>
+                        <button>Update</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>$949.99</td>
+                    <td>2023-08-04</td>
+                    <td>
+                        <button>Update</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>$500.00</td>
+                    <td>2024-01-02</td>
+                    <td>
+                        <button>Update</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
             <!-- Add more rows here -->
         </tbody>
     </table>
+    <footer>
+        <p>© 2024 Luke Ellister & Leo Yudelson</p>
+    </footer>
 </body>
 </html>
 

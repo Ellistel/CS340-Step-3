@@ -9,15 +9,17 @@
 </head>
 <body>
     <nav>
+        <img src="RTI_Logo.png" alt="RTI_Logo" class = "logo">
         <a href="index.html">Home</a>
-        <a href = "customers.html">Customers</a>
+        <a href="customers.html">Customers</a>
         <a href="ffls.html">FFLS</a>
+        <a href = "firearms.html">Firearms</a>
         <a href="transactions.html">Transactions</a>
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
 
     </nav>
     <section>
-        <form id="firearminsert" class="firearmforms">
+        <form id="firearminsert" class="forms">
             <legend>Insert Firearm</legend>
             <label for="price">Price:</label>
             <input type="number" id="price" required name="price" step="0.01"><br><br>
@@ -39,24 +41,50 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Model</th>
                 <th>Price</th>
-                <th>Inventory Count</th>
-                <th>Country Of Origin</th>
+                <th>Model</th>
+                <th>Country of Origin</th>
                 <th>Caliber</th>
                 <th>Historic Detail</th>
+                <th>Inventory Stock</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td></td> <!--ID-->
-                <td></td> <!--Model-->
-                <td></td> <!--Price-->
-                <td></td> <!--Inventory Count-->
-                <td></td> <!--Country Of Origin-->
-                <td></td> <!--Caliber-->
-                <td></td> <!--Historic Detail-->
+                <td>1</td>
+                <td>$1550.00</td>
+                <td>VOPO P08 LUGER PISTOL</td>
+                <td>EAST GERMANY</td>
+                <td>9x19mm Parabellum</td>
+                <td>WWI - WWII manufactured Lugers refurbished post war by the East German police.</td>
+                <td>250</td>
+                <td>
+                    <button>Update</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>$250.00</td>
+                <td>M91 Carcano Carbine</td>
+                <td>Italy</td>
+                <td>6.5x52mm Carcano</td>
+                <td>Main Infantry rifle of Facist Italy. Manufacture dates range from 1900 - 1945.</td>
+                <td>1150</td>
+                <td>
+                    <button>Update</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>$699.99</td>
+                <td>M93 Lebel rifle</td>
+                <td>France</td>
+                <td>8mm Lebel</td>
+                <td>Infantry Rifle adopted by France in 1886, and the first rifle to use smokeless powder ammunition</td>
+                <td>10</td>
                 <td>
                     <button>Update</button>
                     <button>Delete</button>
@@ -66,4 +94,7 @@
         </tbody>
     </table>
 </body>
+<footer>
+    <p>© 2024 Luke Ellister & Leo Yudelson</p>
+</footer>
 </html>
