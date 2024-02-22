@@ -27,7 +27,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: aqua; /* Darker blue on hover */
     color: #fff;
 }
 
@@ -110,5 +110,11 @@ th
 #transacionIDFilter
 {
     margin: 5px;
+}
+
+#selected-page
+{
+    background-color: #0056b3;
+    color: #fff;
 }
 
