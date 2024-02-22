@@ -61,10 +61,7 @@ th
 {
     background-color: #f2f2f2;
     padding: 5px;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-left: 1px;
-    border-right: 1px;
+    border: 1px solid;
     border-color: #ccc;
 }
 
@@ -102,3 +99,16 @@ th
 {
     text-align: center;
 }
+
+#transactionID-filter
+{
+    margin-left: 10px;
+    display: flex;
+    align-items: left;
+}
+
+#transacionIDFilter
+{
+    margin: 5px;
+}
+

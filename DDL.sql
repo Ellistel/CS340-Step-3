@@ -33,8 +33,8 @@ CREATE OR REPLACE TABLE Transactions (
     customerID INT NOT NULL,
     saleAmount DECIMAL(19,2),
     saleDate DATE,
-    FOREIGN KEY (fflicenseID) REFERENCES FFLs(fflicenseID) ON DELETE CASCADE,
-    FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE CASCADE
+    FOREIGN KEY (fflicenseID) REFERENCES FFLs(fflicenseID)
+    FOREIGN KEY (customerID) REFERENCES Customers(customerID)
 );
 
 -- Transactions_Firearms table
@@ -46,7 +46,7 @@ CREATE OR REPLACE TABLE Transactions_Firearms (
     unitPrice DECIMAL(19,2),
     lineTotal DECIMAL(19,2),
     FOREIGN KEY (transactionID) REFERENCES Transactions(transactionID) ON DELETE CASCADE,
-    FOREIGN KEY (firearmID) REFERENCES Firearms(firearmID) ON DELETE CASCADE
+    FOREIGN KEY (firearmID) REFERENCES Firearms(firearmID)
 );
 
 --Below are the insert Statements:

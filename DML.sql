@@ -1,4 +1,4 @@
--- When user hits select all for Customers
+-- Populate table for customers.html when page loads
 SELECT * FROM Customers;
 
 -- When user inserts into Customers
@@ -10,7 +10,7 @@ UPDATE Customers SET customerName = :new_customerName, customerContact = :new_cu
 -- Delete Customer
 DELETE FROM Customers WHERE customerID = :customerID;
 
--- When user hits select all for FFLs
+-- Populate table FFLS.html when page loads
 SELECT * FROM FFLs;
 
 -- When user inserts into FFLs
@@ -22,7 +22,7 @@ UPDATE FFLs SET fflName = :new_fflName, fflContact = :new_fflContact WHERE fflic
 -- Delete FFL
 DELETE FROM FFLs WHERE fflicenseID = :fflicenseID;
 
--- When user hits select all for Transactions
+-- Populate table transactions.html when page loads
 SELECT * FROM Transactions;
 
 -- When user inserts into Transactions
@@ -34,7 +34,7 @@ UPDATE Transactions SET fflicenseID = :new_fflicenseID, customerID = :new_custom
 -- Delete Transaction
 DELETE FROM Transactions WHERE transactionID = :transactionID;
 
--- When user hits select all for Firearms
+-- Populate table firearms.html when page loads
 SELECT * FROM Firearms;
 
 -- When user inserts into Firearms
@@ -46,7 +46,8 @@ UPDATE Firearms SET price = :new_price, model = :new_model, inventoryStock = :ne
 -- Delete Firearms
 DELETE FROM Firearms WHERE firearmID = :firearmID;
 
--- When user hits select all for Transactions_Firearms
+
+-- Populate table for the intersection table when the html when page loads
 SELECT * FROM Transactions_Firearms;
 
 -- When user inserts into Transactions_Firearms
@@ -57,3 +58,6 @@ UPDATE Transactions_Firearms SET transactionID = :new_transactionID, firearmID =
 
 -- Delete Transactions_Firearms
 DELETE FROM Transactions_Firearms WHERE transactionsFirearmsID = :transactionsFirearmsID;
+
+-- Select Search Query for Transactions_Firearms Table
+SELECT * FROM transaction_firearm WHERE transaction_id = :transaction_id;
