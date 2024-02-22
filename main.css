@@ -118,3 +118,11 @@ th
     color: #fff;
 }
 
+legend
+{
+    border-color: #ccc solid;
+    border: 1px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
