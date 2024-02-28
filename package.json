@@ -1,0 +1,16 @@
+{
+  "name": "cs340-step-3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luke Ellister, Leo Yudelson",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.18.2",
+    "forever": "^4.0.3",
+    "handlebars": "^4.7.8"
+  }
+}

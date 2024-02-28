@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 340 Group 114</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    <nav>
+        <img src="RTI_Logo.png" alt="RTI_Logo" class = "logo">
+        <a href="index.html">Home</a>
+        <a href="customers.html" id = "selected-page">Customers</a>
+        <a href="ffls.html">FFLS</a>
+        <a href="firearms.html">Firearms</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="transactionsandfirearms.html">Transactions and Firearms</a>
+    
+    </nav>
+    <section>
+        <form id="customerinsert" class="forms">
+            <legend>Insert Customer</legend>
+            <label for="cname">Customer Name:</label>
+            <input type="text" id="cname" required name="cname"><br><br>
+            <label for="contact">Contact Information:</label>
+            <input type="text" id="contact" required name="contact"><br><br>
+            <input type="submit">
+        </form>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+           {{#each data}}
+           <tr>
+                <td>{{this.customerID}}</td>
+                <td>{{this.customerName}}</td>
+                <td>{{this.customerContact}}</td>
+           </tr>
+        </tbody>
+
+    </table>
+    <footer>
+        <p>© 2024 Luke Ellister & Leo Yudelson</p>
+    </footer>
+</body>
+</html>
