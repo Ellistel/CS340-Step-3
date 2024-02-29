@@ -45,6 +45,7 @@ app.get('/Customers', function(req, res) {
     })
 })
 
+
     app.post('/add-customer-form', function(req, res) {
     let data = req.body
 
@@ -60,8 +61,6 @@ app.get('/Customers', function(req, res) {
         }
     })
 })
-
-
 
 app.post('/deleteCustomer/:customerID', function(req, res)
     {
@@ -87,6 +86,7 @@ app.post('/deleteCustomer/:customerID', function(req, res)
 app.post('/updateCustomer/:customerID', function(req, res)
     {
         let customerId = req.params.customerID
+
         console.log(req.body)
         let data = req.body
         let name = data['cname']
@@ -103,6 +103,7 @@ app.post('/updateCustomer/:customerID', function(req, res)
 
         })
     })
+
     app.use('/',express.static(path.join(__dirname, 'static')))
 
 
