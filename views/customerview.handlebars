@@ -19,7 +19,7 @@
     
     </nav>
     <section>
-        <form id="customerinsert" class="forms">
+        <form id="customerinsert" method = "POST" class="forms" action="/add-customer-form">
             <legend>Insert Customer</legend>
             <label for="cname">Customer Name:</label>
             <input type="text" id="cname" required name="cname"><br><br>
@@ -32,7 +32,7 @@
     <table>
         <thead>
             <tr>
-                {{#each data.[0]}}
+                {{#each title.[0]}}
                 <th>
                     {{@key}}
                 </th>
@@ -45,8 +45,17 @@
                 <td>{{this.customerID}}</td>
                 <td>{{this.customerName}}</td>
                 <td>{{this.customerContact}}</td>
+                <td>
+                    <div id="update-delete-buttons">
+                    <button>Update Customer</button>
+                    <form id="deleteCustomerForm" action="/deleteCustomer/{{customerID}}" method="POST">
+                    <button type=" submit">Delete Customer</button>
+                    </form>
+                    </div>
+                </td>
            </tr>
         </tbody>
+        {{/each}}
 
     </table>
     <footer>
