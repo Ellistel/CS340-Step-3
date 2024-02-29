@@ -9,24 +9,24 @@
 </head>
 <body>
     <nav>
-        <img src="RTI_Logo.png" alt="RTI_Logo" class = "logo">
+        <img src="RTI_Logo.png" alt="RTI_Logo" class="logo">
         <a href="index.html">Home</a>
-        <a href="customers.html" id = "selected-page">Customers</a>
+        <a href="customers.html" id="selected-page">Customers</a>
         <a href="ffls.html">FFLS</a>
         <a href="firearms.html">Firearms</a>
         <a href="transactions.html">Transactions</a>
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
-    
     </nav>
+
     <section>
-        <form id="customerinsert" method = "POST" class="forms" action="/add-customer-form">
+        <form id="customerinsert" method="POST" class="forms" action="/add-customer-form">
             <legend>Insert Customer</legend>
             <label for="cname">Customer Name:</label>
             <input type="text" id="cname" required name="cname"><br><br>
             <label for="contact">Contact Information:</label>
             <input type="text" id="contact" required name="contact"><br><br>
             <input type="submit">
-        </form>
+        </form> 
     </section>
 
     <table>
@@ -47,19 +47,48 @@
                 <td>{{this.customerContact}}</td>
                 <td>
                     <div id="update-delete-buttons">
-                    <button>Update Customer</button>
-                    <form id="deleteCustomerForm" action="/deleteCustomer/{{customerID}}" method="POST">
-                    <button type=" submit">Delete Customer</button>
-                    </form>
+                        <button onclick="toggleForm('updateForm{{this.customerID}}')">Update Customer</button>
+                        <div id="updateForm{{this.customerID}}" class="update-button">
+                            <form action="/updateCustomer/{{customerID}}" class="update-form" method="POST">
+                                <label for="cname">Customer Name:</label>
+                                <input type="text" id="cname" required name="cname"><br><br>
+                                <label for="contact">Contact Information:</label>
+                                <input type="text" id="contact" required name="contact"><br><br>
+                                <input type="submit">
+                            </form>
+                        </div>
+                        <form id="deleteCustomerForm" action="/deleteCustomer/{{customerID}}" method="POST">
+                            <button type="submit">Delete Customer</button>
+                        </form>
                     </div>
                 </td>
            </tr>
+           {{/each}}
         </tbody>
-        {{/each}}
-
     </table>
+
     <footer>
         <p>© 2024 Luke Ellister & Leo Yudelson</p>
     </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var updateForms = document.getElementsByClassName('update-button');
+            Array.from(updateForms).forEach(function(form) {
+                form.style.display = "none";
+            });
+        });
+
+        function toggleForm(formId) {
+            var formSection = document.getElementById(formId);
+            if (formSection.style.display === "none") {
+                formSection.style.display = "block";
+            } else {
+                formSection.style.display = "none";
+            }
+        }
+    </script>
+
 </body>
 </html>
+

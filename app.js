@@ -20,6 +20,7 @@ var db = require('./database/db-connector');
 
 let query2 = `INSERT INTO Customers(customerName, customerContact) VALUES (?, ?)`;
 let customerDelete = `DELETE FROM Customers WHERE customerID = ?;`
+let customerUpdate = `UPDATE Customers SET customerName = ?, customerContact = ? WHERE customerID = ?;`
 /*
     ROUTES
 */
@@ -62,12 +63,15 @@ app.get('/Customers', function(req, res) {
     });
 });
 
-app.post('/deleteCustomer/:customerID', function(req, res)
+app.post('/updateCustomer/:customerID', function(req, res)
     {
         let customerId = req.params.customerID;
         console.log("Im in here")
         console.log(req.body)
-        db.pool.query(customerDelete, customerId, function (err, results, fields){
+        let data = req.body;
+        let name = data['cname'];
+        let contact = data['contact'];
+        db.pool.query(customerUpdate, [name, contact, customerId], function (err, results, fields){
 
                         // Send the results to the browser
                         if(err){
@@ -80,6 +84,9 @@ app.post('/deleteCustomer/:customerID', function(req, res)
         });
     });
     app.use('/',express.static(path.join(__dirname, 'static')))
+
+
+    
 /*
     LISTENER
 */

@@ -132,7 +132,10 @@ section {
     margin-bottom: 20px;
 }
 
-button{
+.update-form{
+    border-width: 2px;
+    border-color: black solid;
+    padding: 5px;
     
 }
 
