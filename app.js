@@ -83,6 +83,20 @@ app.post('/updateCustomer/:customerID', function(req, res)
 
         });
     });
+
+//This section does not work yet
+app.delete('/deleteCustomer/:customerID',function(req,res){
+    let customerId = req.params.customerID;
+    db.pool.query(customerDelete, [customerId], function(err, results, fields){
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+        }else{
+            res.redirect("/Customers");
+        }
+    });
+});
+
     app.use('/',express.static(path.join(__dirname, 'static')))
 
 
