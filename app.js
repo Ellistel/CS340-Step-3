@@ -13,7 +13,7 @@ var app = express()
 app.engine("handlebars", exphbs.engine({ defaultLayout: false }))
 app.set("view engine", "handlebars")
 
-PORT = 2425
+PORT = 2426
 
 // Database
 var db = require('./database/db-connector')
@@ -104,7 +104,7 @@ app.post('/updateCustomer/:customerID', function(req, res)
         })
     })
 
-    app.use('/',express.static(path.join(__dirname, 'static')))
+app.use('/',express.static(path.join(__dirname, 'static')))
 
 
     
@@ -112,5 +112,5 @@ app.post('/updateCustomer/:customerID', function(req, res)
     LISTENER
 */
 app.listen(PORT, function() {
-    console.log('Express started on http://localhost:' + PORT + ' press Ctrl-C to terminate.')
+    console.log('Express started on Port:' + PORT + ' press Ctrl-C to terminate.')
 })

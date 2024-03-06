@@ -11,13 +11,15 @@
     <nav>
         <img src="RTI_Logo.png" alt="RTI_Logo" class="logo">
         <a href="index.html">Home</a>
-        <a href="http://flip1.engr.oregonstate.edu:2425/Customers" id="selected-page">Customers</a>
+        <a href="http://flip4.engr.oregonstate.edu:2426/Customers" id="selected-page">Customers</a>
         <a href="ffls.html">FFLS</a>
         <a href="firearms.html">Firearms</a>
         <a href="transactions.html">Transactions</a>
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
     </nav>
 
+    <div>
+    <button>Insert Customer</button>
     <section>
         <form id="customerinsert" method="POST" class="forms" action="/add-customer-form">
             <legend>Insert Customer</legend>
@@ -28,6 +30,7 @@
             <input type="submit">
         </form> 
     </section>
+    </div>
 
     <table>
         <thead>
@@ -40,38 +43,57 @@
             </tr>
         </thead>
         <tbody>
-           {{#each data}}
-           <tr>
+            {{#each data}}
+            <tr id="customerRow_{{this.customerID}}">
                 <td>{{this.customerID}}</td>
-                <td>{{this.customerName}}</td>
-                <td>{{this.customerContact}}</td>
+                <td class="cname">{{this.customerName}}</td>
+                <td class="contact">{{this.customerContact}}</td>
                 <td>
                     <div id="update-delete-buttons">
-                        <button onclick="toggleForm('updateForm{{this.customerID}}')">Update Customer</button>
-                        <div id="updateForm{{this.customerID}}" class="update-button">
-                            <form action="/updateCustomer/{{customerID}}" class="update-form" method="POST">
-                                <label for="cname">Customer Name:</label>
-                                <input type="text" id="cname" required name="cname"><br><br>
-                                <label for="contact">Contact Information:</label>
-                                <input type="text" id="contact" required name="contact"><br><br>
-                                <input type="submit">
-                            </form>
-                        </div>
-                        <form id="deleteCustomerForm" action="/deleteCustomer/{{customerID}}" method="POST">
+                        <button onclick="toggleForm('{{this.customerID}}')">Update Customer</button>
+                         <form id="deleteCustomerForm" action="/deleteCustomer/{{customerID}}" method="POST">
                             <button type="submit">Delete Customer</button>
                         </form>
                     </div>
                 </td>
-           </tr>
-           {{/each}}
+            </tr>
+            {{/each}}
         </tbody>
     </table>
+
+    <div class="modal-container">
+        <form action="/updateCustomer/{{customerID}}" class="update-form" method="POST">
+            <label for="cname">Customer Name:</label>
+            <input type="text" id="cname" required name="cname"><br><br>
+            <label for="contact">Contact Information:</label>
+            <input type="text" id="contact" required name="contact"><br><br>
+            <input type="submit">
+            <button onclick="closeModal()">Close</button>
+        </form>
+    </div>
 
     <footer>
         <p>© 2024 Luke Ellister & Leo Yudelson</p>
     </footer>
 
     <script>
+        function toggleForm(customerID) {
+            var modalContainer = document.querySelector('.modal-container');
+            var modalForm = modalContainer.querySelector('.update-form');
+            var customerNameInput = modalForm.querySelector('#cname');
+            var contactInput = modalForm.querySelector('#contact');
+
+            modalContainer.style.display = "block";
+
+            var customerRow = document.querySelector('#customerRow_' + customerID);
+            var customerName = customerRow.querySelector('.cname').innerText;
+            var customerContact = customerRow.querySelector('.contact').innerText;
+            customerNameInput.value = customerName;
+            contactInput.value = customerContact;
+
+            modalForm.action = "/updateCustomer/" + customerID;
+        }
+
         window.addEventListener('DOMContentLoaded', function() {
             var updateForms = document.getElementsByClassName('update-button');
             Array.from(updateForms).forEach(function(form) {
@@ -79,16 +101,12 @@
             });
         });
 
-        function toggleForm(formId) {
-            var formSection = document.getElementById(formId);
-            if (formSection.style.display === "none") {
-                formSection.style.display = "block";
-            } else {
-                formSection.style.display = "none";
-            }
+        function closeModal()
+        {
+            var modalContainer = document.querySelector('.modal-container');
+             modalContainer.style.display = "none";
         }
     </script>
-
 </body>
 </html>
 
