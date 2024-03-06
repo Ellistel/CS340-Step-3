@@ -163,3 +163,65 @@ section {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.modal-container-insert {
+
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#customer-insert-form
+{
+
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.insert-customer-button{
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    font-size: large;
+    color: #0056b3;
+    background-color: #f8f9fa;
+    border: solid 1px #007bff;
+    border-radius: 5px;
+}
+
+.insert-customer-button:hover{
+    background-color: aqua; /* Darker blue on hover */
+    color: #fff;
+}
+
+.update-buttons{
+    background-color: rgb(3, 148, 39);
+    color: #fff;
+
+}
+
+.update-buttons:hover{
+    background-color: rgb(17, 246, 74);
+    color: #fff;
+
+}
+
+.delete-buttons{
+    background-color: rgb(166, 31, 31);
+    color: #fff;
+
+}
+
+.delete-buttons:hover{
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+
+}

@@ -18,18 +18,18 @@
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
     </nav>
 
-    <div>
-    <button>Insert Customer</button>
-    <section>
-        <form id="customerinsert" method="POST" class="forms" action="/add-customer-form">
-            <legend>Insert Customer</legend>
+    <div class ="insert-customer">
+    <button onclick="toggleInsert()" class="insert-customer-button">Insert a new Customer</button>
+        <div class="modal-container-insert">
+         <form id="customer-insert-form" method="POST" class="forms" action="/add-customer-form">
             <label for="cname">Customer Name:</label>
             <input type="text" id="cname" required name="cname"><br><br>
             <label for="contact">Contact Information:</label>
             <input type="text" id="contact" required name="contact"><br><br>
             <input type="submit">
-        </form> 
-    </section>
+            <button onclick="closeModal('.modal-container-insert')">Close</button>
+         </form>     
+        </div>
     </div>
 
     <table>
@@ -50,9 +50,9 @@
                 <td class="contact">{{this.customerContact}}</td>
                 <td>
                     <div id="update-delete-buttons">
-                        <button onclick="toggleForm('{{this.customerID}}')">Update Customer</button>
+                        <button onclick="toggleForm('{{this.customerID}}')" class="update-buttons">Update Customer</button>
                          <form id="deleteCustomerForm" action="/deleteCustomer/{{customerID}}" method="POST">
-                            <button type="submit">Delete Customer</button>
+                            <button type="submit" class="delete-buttons">Delete Customer</button>
                         </form>
                     </div>
                 </td>
@@ -68,7 +68,7 @@
             <label for="contact">Contact Information:</label>
             <input type="text" id="contact" required name="contact"><br><br>
             <input type="submit">
-            <button onclick="closeModal()">Close</button>
+            <button onclick="closeModal(".modal-container")">Close</button>
         </form>
     </div>
 
@@ -101,10 +101,16 @@
             });
         });
 
-        function closeModal()
+        function closeModal(modal)
         {
-            var modalContainer = document.querySelector('.modal-container');
+            var modalContainer = document.querySelector(modal);
              modalContainer.style.display = "none";
+        }
+
+        function toggleInsert()
+        {
+            var modalContainer = document.querySelector('.modal-container-insert')
+            modalContainer.style.display = "block";
         }
     </script>
 </body>
