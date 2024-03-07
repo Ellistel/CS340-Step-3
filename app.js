@@ -22,6 +22,8 @@ let query2 = `INSERT INTO Customers(customerName, customerContact) VALUES (?, ?)
 let customerDelete = `DELETE FROM Customers WHERE customerID = ?`
 let customerUpdate = `UPDATE Customers SET customerName = ?, customerContact = ? WHERE customerID = ?`
 let fflsAdd = `INSERT INTO FFLs(fflName, fflContact) VALUES (?, ?)`
+let fflsDelete = `DELETE FROM FFLs WHERE fflicenseID = ?`
+let fflsUpdate = `UPDATE FFLS SET fflName = ?, fflContact = ? WHERE fflicenseID = ?`
 /*
     ROUTES
 */
@@ -40,6 +42,24 @@ app.get('/Customers', function(req, res) {
         }))
         // Now, pass the modified 'formattedRows' data to the rendering engine
         res.render('customerview', { title: formattedRows, data: rows })
+
+
+
+    })
+})
+
+app.get('/FFLS', function(req, res) {
+    let query1 = 'SELECT * FROM FFLs'
+    db.pool.query(query1, function(error, rows, fields) {
+
+        const formattedRows = rows.map(FFL => ({
+            ID: FFL.fflicenseID,
+            'FFL Name': FFL.fflName,
+            'FFL Contact': FFL.fflContact,
+            Actions:''
+        }))
+        // Now, pass the modified 'formattedRows' data to the rendering engine
+        res.render('fflsview', { title: formattedRows, data: rows })
 
 
 
@@ -97,6 +117,26 @@ app.post('/deleteCustomer/:customerID', function(req, res)
 
         })
     })
+
+app.post('/deleteFFL/:fflicenseID', function(req, res)
+    {
+        let fflId = req.params.fflicenseID
+        console.log(req.body)
+        let data = req.body
+        let name = data['fname']
+        let contact = data['contact']
+        db.pool.query(fflsDelete, [fflID], function (err, results, fields){
+
+                        // Send the results to the browser
+                        if(err){
+                            console.log(err)
+                            res.sendStatus(500)
+                        }
+                        else
+                        res.redirect("/FFLS")
+
+        })
+    })
    
 
 app.post('/updateCustomer/:customerID', function(req, res)
@@ -116,6 +156,27 @@ app.post('/updateCustomer/:customerID', function(req, res)
                         }
                         else
                         res.redirect("/Customers")
+
+        })
+    })
+
+app.post('/updateFFL/:fflicenseID', function(req, res)
+    {
+        let fflId = req.params.fflicenseID
+
+        console.log(req.body)
+        let data = req.body
+        let name = data['fname']
+        let contact = data['contact']
+        db.pool.query(fflsUpdate, [name, contact, fflID], function (err, results, fields){
+
+                        // Send the results to the browser
+                        if(err){
+                            console.log(err)
+                            res.sendStatus(500)
+                        }
+                        else
+                        res.redirect("/FFLS")
 
         })
     })
