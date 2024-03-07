@@ -23,7 +23,7 @@ let customerDelete = `DELETE FROM Customers WHERE customerID = ?`
 let customerUpdate = `UPDATE Customers SET customerName = ?, customerContact = ? WHERE customerID = ?`
 let fflsAdd = `INSERT INTO FFLs(fflName, fflContact) VALUES (?, ?)`
 let fflsDelete = `DELETE FROM FFLs WHERE fflicenseID = ?`
-let fflsUpdate = `UPDATE FFLS SET fflName = ?, fflContact = ? WHERE fflicenseID = ?`
+let fflsUpdate = `UPDATE FFLs SET fflName = ?, fflContact = ? WHERE fflicenseID = ?`
 /*
     ROUTES
 */
@@ -118,25 +118,23 @@ app.post('/deleteCustomer/:customerID', function(req, res)
         })
     })
 
-app.post('/deleteFFL/:fflicenseID', function(req, res)
-    {
-        let fflId = req.params.fflicenseID
-        console.log(req.body)
-        let data = req.body
-        let name = data['fname']
-        let contact = data['contact']
-        db.pool.query(fflsDelete, [fflID], function (err, results, fields){
+app.post('/deleteFFL/:fflicenseID', function(req, res) {
+    let fflId = req.params.fflicenseID;
+    console.log(req.body);
+    let data = req.body;
+    let name = data['fname'];
+    let contact = data['contact'];
+    db.pool.query(fflsDelete, [fflId], function(err, results, fields) {
+        // Send the results to the browser
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            res.redirect("/FFLS");
+        }
+    });
+});
 
-                        // Send the results to the browser
-                        if(err){
-                            console.log(err)
-                            res.sendStatus(500)
-                        }
-                        else
-                        res.redirect("/FFLS")
-
-        })
-    })
    
 
 app.post('/updateCustomer/:customerID', function(req, res)
@@ -168,7 +166,7 @@ app.post('/updateFFL/:fflicenseID', function(req, res)
         let data = req.body
         let name = data['fname']
         let contact = data['contact']
-        db.pool.query(fflsUpdate, [name, contact, fflID], function (err, results, fields){
+        db.pool.query(fflsUpdate, [name, contact, fflId], function (err, results, fields){
 
                         // Send the results to the browser
                         if(err){

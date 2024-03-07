@@ -49,7 +49,7 @@
                     <div id="update-delete-buttons">
                         <button onclick="toggleForm('updateForm{{this.fflicenseID}}')">Update FFL</button>
                         <div id="updateForm{{this.fflicenseID}}" class="update-button">
-                            <form action="/updateFFL/{{fflicenseID}}" class="update-form" method="POST">
+                            <form action="/updateFFL/{{this.fflicenseID}}" class="update-form" method="POST">
                                 <label for="fname">FFL Name:</label>
                                 <input type="text" id="fname" required name="fname"><br><br>
                                 <label for="contact">Contact Information:</label>
@@ -57,7 +57,7 @@
                                 <input type="submit">
                             </form>
                         </div>
-                        <form id="deleteFFLForm" action="/deleteFFL/{{fflicenseID}}" method="POST">
+                        <form id="deleteFFLForm" action="/deleteFFL/{{this.fflicenseID}}" method="POST">
                             <button type="submit">Delete FFL</button>
                         </form>
                     </div>
