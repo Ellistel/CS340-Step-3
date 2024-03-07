@@ -11,23 +11,28 @@
     <nav>
         <img src="RTI_Logo.png" alt="RTI_Logo" class="logo">
         <a href="index.html">Home</a>
-        <a href="http://flip1.engr.oregonstate.edu:2426/Customers" >Customers</a>
-        <a href="http://flip1.engr.oregonstate.edu:2426/FFLS" id="selected-page">FFLS</a>
+        <a href="http://flip2.engr.oregonstate.edu:2427/Customers" >Customers</a>
+        <a href="http://flip2.engr.oregonstate.edu:2427/FFLS" id="selected-page">FFLS</a>
         <a href="firearms.html">Firearms</a>
         <a href="transactions.html">Transactions</a>
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
     </nav>
 
-    <section>
-        <form id="fflsinsert" method="POST" action="/add-ffls-form" class="forms">
-            <legend>Insert FFL</legend>
+    
+    <div class ="insertffl">
+    <button onclick="toggleInsert()" class="insert-button">Insert a new FFL</button>
+    <div class="modal-container-insert">
+        <form id="ffl-insert-form" method="POST" class="forms" action="/add-ffls-form">
             <label for="fname">FFL Name:</label>
             <input type="text" id="fname" required name="fname"><br><br>
             <label for="contact">Contact Information:</label>
             <input type="text" id="contact" required name="contact"><br><br>
             <input type="submit">
-        </form>
-    </section>
+            <button type="button" onclick="closeModal('.modal-container-insert')">Close</button>
+        </form>     
+    </div>
+</div>
+
 
     <table>
         <thead>
@@ -41,31 +46,33 @@
         </thead>
         <tbody>
            {{#each data}}
-           <tr>
+          <tr id="fflRow_{{this.fflicenseID}}">
                 <td>{{this.fflicenseID}}</td>
-                <td>{{this.fflName}}</td>
-                <td>{{this.fflContact}}</td>
+                <td class="fname">{{this.fflName}}</td>
+                <td class="contact">{{this.fflContact}}</td>
                 <td>
                     <div id="update-delete-buttons">
-                        <button onclick="toggleForm('updateForm{{this.fflicenseID}}')">Update FFL</button>
-                        <div id="updateForm{{this.fflicenseID}}" class="update-button">
-                            <form action="/updateFFL/{{this.fflicenseID}}" class="update-form" method="POST">
-                                <label for="fname">FFL Name:</label>
-                                <input type="text" id="fname" required name="fname"><br><br>
-                                <label for="contact">Contact Information:</label>
-                                <input type="text" id="contact" required name="contact"><br><br>
-                                <input type="submit">
-                            </form>
-                        </div>
-                        <form id="deleteFFLForm" action="/deleteFFL/{{this.fflicenseID}}" method="POST">
-                            <button type="submit">Delete FFL</button>
+                        <button onclick="toggleForm('{{this.fflicenseID}}')" class="update-buttons">Update FFL</button>
+                         <form id="deleteFFLForm" action="/deleteFFL/{{fflicenseID}}" method="POST">
+                            <button type="submit" class="delete-buttons">Delete FFL</button>
                         </form>
                     </div>
                 </td>
-           </tr>
+            </tr>
            {{/each}}
         </tbody>
     </table>
+
+        <div class="modal-container">
+        <form action="/updateFFL/{{this.fflicenseID}}" class="update-form" method="POST">
+            <label for="fname">FFL Name:</label>
+            <input type="text" id="fname" required name="fname"><br><br>
+            <label for="contact">Contact Information:</label>
+            <input type="text" id="contact" required name="contact"><br><br>
+            <input type="submit">
+            <button onclick="closeModal('.modal-container')">Close</button>
+        </form>
+    </div>
 
     <footer>
         <p>© 2024 Luke Ellister & Leo Yudelson</p>
@@ -79,13 +86,33 @@
             });
         });
 
-        function toggleForm(formId) {
-            var formSection = document.getElementById(formId);
-            if (formSection.style.display === "none") {
-                formSection.style.display = "block";
-            } else {
-                formSection.style.display = "none";
-            }
+
+         function toggleForm(fflId) {
+            var modalContainer = document.querySelector('.modal-container');
+            var modalForm = modalContainer.querySelector('.update-form');
+            var fflNameInput = modalForm.querySelector('#fname');
+            var contactInput = modalForm.querySelector('#contact');
+
+            modalContainer.style.display = "block";
+
+            var fflRow = document.querySelector('#fflRow_' + fflId);
+            var fflName = fflRow.querySelector('.fname').innerText;
+            var fflContact = fflRow.querySelector('.contact').innerText;
+            fflNameInput.value = fflName;
+            contactInput.value = fflContact;
+
+            modalForm.action = "/updateFFL/" + fflId;
+        }
+
+         function closeModal(modal)
+        {
+            var modalContainer = document.querySelector(modal);
+             modalContainer.style.display = "none";
+        }
+        function toggleInsert()
+        {
+            var modalContainer = document.querySelector('.modal-container-insert')
+            modalContainer.style.display = "block";
         }
     </script>
 
