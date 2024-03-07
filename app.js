@@ -21,6 +21,7 @@ var db = require('./database/db-connector')
 let query2 = `INSERT INTO Customers(customerName, customerContact) VALUES (?, ?)`
 let customerDelete = `DELETE FROM Customers WHERE customerID = ?`
 let customerUpdate = `UPDATE Customers SET customerName = ?, customerContact = ? WHERE customerID = ?`
+let fflsAdd = `INSERT INTO FFLs(fflName, fflContact) VALUES (?, ?)`
 /*
     ROUTES
 */
@@ -58,6 +59,21 @@ app.get('/Customers', function(req, res) {
             res.sendStatus(400)
         } else {
             res.redirect('/Customers')
+        }
+    })
+})
+
+app.post('/add-ffls-form', function(req,res){
+    let data = req.body
+    let name = data['fname']
+    let contact = data['contact']
+
+    db.pool.query(fflsAdd, [name, contact], function(error, rows, fields){
+        if (error) {
+            console.log(error)
+            res.sendStatus(400)
+        } else {
+            res.redirect('/FFLS')
         }
     })
 })
