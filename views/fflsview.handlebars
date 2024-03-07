@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 340 Group 114</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    <nav>
+        <img src="RTI_Logo.png" alt="RTI_Logo" class="logo">
+        <a href="index.html">Home</a>
+        <a href="http://flip1.engr.oregonstate.edu:2426/Customers" >Customers</a>
+        <a href="http://flip1.engr.oregonstate.edu:2426/FFLS" id="selected-page">FFLS</a>
+        <a href="firearms.html">Firearms</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="transactionsandfirearms.html">Transactions and Firearms</a>
+    </nav>
+
+    <section>
+        <form id="fflsinsert" method="POST" action="/add-ffls-form" class="forms">
+            <legend>Insert FFL</legend>
+            <label for="fname">FFL Name:</label>
+            <input type="text" id="fname" required name="fname"><br><br>
+            <label for="contact">Contact Information:</label>
+            <input type="text" id="contact" required name="contact"><br><br>
+            <input type="submit">
+        </form>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                {{#each title.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+           {{#each data}}
+           <tr>
+                <td>{{this.fflicenseID}}</td>
+                <td>{{this.fflName}}</td>
+                <td>{{this.fflContact}}</td>
+                <td>
+                    <div id="update-delete-buttons">
+                        <button onclick="toggleForm('updateForm{{this.fflicenseID}}')">Update FFL</button>
+                        <div id="updateForm{{this.fflicenseID}}" class="update-button">
+                            <form action="/updateFFL/{{fflicenseID}}" class="update-form" method="POST">
+                                <label for="fname">FFL Name:</label>
+                                <input type="text" id="fname" required name="fname"><br><br>
+                                <label for="contact">Contact Information:</label>
+                                <input type="text" id="contact" required name="contact"><br><br>
+                                <input type="submit">
+                            </form>
+                        </div>
+                        <form id="deleteFFLForm" action="/deleteFFL/{{fflicenseID}}" method="POST">
+                            <button type="submit">Delete FFL</button>
+                        </form>
+                    </div>
+                </td>
+           </tr>
+           {{/each}}
+        </tbody>
+    </table>
+
+    <footer>
+        <p>© 2024 Luke Ellister & Leo Yudelson</p>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var updateForms = document.getElementsByClassName('update-button');
+            Array.from(updateForms).forEach(function(form) {
+                form.style.display = "none";
+            });
+        });
+
+        function toggleForm(formId) {
+            var formSection = document.getElementById(formId);
+            if (formSection.style.display === "none") {
+                formSection.style.display = "block";
+            } else {
+                formSection.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
