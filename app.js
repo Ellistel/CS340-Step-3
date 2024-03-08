@@ -27,6 +27,8 @@ let fflsUpdate = `UPDATE FFLs SET fflName = ?, fflContact = ? WHERE fflicenseID 
 let firearmDelete = `DELETE FROM Firearms WHERE firearmID = ?`
 let transactionFirearmDelete = 'DELETE FROM Transactions_Firearms WHERE transactionsFirearmsID = ?'
 let firearmAdd = "INSERT INTO Firearms(price, model, inventoryStock, countryOfOrigin, caliber, historicDetail) VALUES (?, ?, ?, ?, ?, ?)";
+let firearmUpdate ="UPDATE Firearms SET price = ?, model = ?, inventoryStock = ?, countryOfOrigin = ?, caliber = ?, historicDetail = ? WHERE firearmID = ?";
+
 
 
 
@@ -238,6 +240,32 @@ app.post('/updateFFL/:fflicenseID', function(req, res)
                         }
                         else
                         res.redirect("/FFLS")
+
+        })
+    })
+
+
+    app.post('/updateFirearm/:firearmID', function(req, res)
+    {
+        let firearmId = req.params.firearmID
+
+        console.log(req.body)
+        let data = req.body
+        let price = data['price']
+        let model = data['model']
+        let inventoryStock = data['inventory']
+        let country = data['country']
+        let caliber = data['caliber']
+        let detail = data['historicDetail']
+        db.pool.query(firearmUpdate, [price, model, inventoryStock, country, caliber, detail, firearmId], function (err, results, fields){
+
+                        // Send the results to the browser
+                        if(err){
+                            console.log(err)
+                            res.sendStatus(500)
+                        }
+                        else
+                        res.redirect("/Firearms")
 
         })
     })

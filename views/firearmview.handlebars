@@ -11,9 +11,9 @@
     <nav>
         <img src="RTI_Logo.png" alt="RTI_Logo" class="logo">
         <a href="index.html">Home</a>
-        <a href="http://flip2.engr.oregonstate.edu:2427/Customers">Customers</a>
-        <a href="http://flip2.engr.oregonstate.edu:2427/FFLS">FFLS</a>
-        <a href="firearms.html" id="selected-page">Firearms</a>
+       <a href="http://flip1.engr.oregonstate.edu:2427/Customers">Customers</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/FFLS" >FFLS</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/Firearms" id="selected-page">Firearms</a>
         <a href="transactions.html">Transactions</a>
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
     </nav>
@@ -56,7 +56,7 @@
                 <td>{{this.firearmID}}</td>
                 <td class="price">{{this.price}}</td>
                 <td class="model">{{this.model}}</td>
-                <td class="iventory">{{this.inventoryStock}}</td>
+                <td class="inventory">{{this.inventoryStock}}</td>
                 <td class="country-of-origin">{{this.countryOfOrigin}}</td>
                 <td class="caliber">{{this.caliber}}</td>
                 <td class="history">{{this.historicDetail}}</td>
@@ -75,12 +75,20 @@
 
     <div class="modal-container">
         <form action="/updateFirearm/{{this.firearmID}}" class="update-form" method="POST">
-            <label for="cname">Customer Name:</label>
-            <input type="text" id="cname" required name="cname"><br><br>
-            <label for="contact">Contact Information:</label>
-            <input type="text" id="contact" required name="contact"><br><br>
+            <label for="price">Price:</label>
+            <input type="number" id="price" required name="price" step="0.01"><br><br>
+            <label for="model">Model:</label>
+            <input type="text" id="model" required name="model"><br><br>
+            <label for="inventory">Inventory Count:</label>
+            <input type="number" id="inventory" required name="inventory"><br><br>
+            <label for="country">Country Of Origin:</label>
+            <input type="text" id="country" required name="country"><br><br>
+            <label for="caliber">Caliber:</label>
+            <input type="text" id="caliber" required name="caliber"><br><br>
+            <label for="historicDetail">Historic Detail:</label>
+            <input type="text" id="historicDetail" name="historicDetail"><br><br>
             <input type="submit">
-            <button onclick="closeModal(".modal-container")">Close</button>
+            <button type="button" onclick="closeModal('.modal-container')">Close</button>
         </form>
     </div>
 
@@ -89,29 +97,49 @@
     </footer>
 
     <script>
-        function toggleForm(customerID) {
-            var modalContainer = document.querySelector('.modal-container');
-            var modalForm = modalContainer.querySelector('.update-form');
-            var customerNameInput = modalForm.querySelector('#cname');
-            var contactInput = modalForm.querySelector('#contact');
+     function toggleForm(firearmID) {
+    var modalContainer = document.querySelector('.modal-container');
+    var modalForm = modalContainer.querySelector('.update-form');
+    var priceInput = modalForm.querySelector('#price');
+    var modelInput = modalForm.querySelector('#model');
+    var inventoryInput = modalForm.querySelector('#inventory');
+    var countryInput = modalForm.querySelector('#country');
+    var caliberInput = modalForm.querySelector('#caliber');
+    var historicDetailInput = modalForm.querySelector('#historicDetail');
 
-            modalContainer.style.display = "block";
+    modalContainer.style.display = "block";
 
-            var customerRow = document.querySelector('#customerRow_' + customerID);
-            var customerName = customerRow.querySelector('.cname').innerText;
-            var customerContact = customerRow.querySelector('.contact').innerText;
-            customerNameInput.value = customerName;
-            contactInput.value = customerContact;
+    var firearmRow = document.querySelector('#firearmRow_' + firearmID);
+    var price = firearmRow.querySelector('.price').innerText;
+    priceInput.value = price;
 
-            modalForm.action = "/updateCustomer/" + customerID;
-        }
+    var model = firearmRow.querySelector('.model').innerText;
+    modelInput.value = model;
 
+    var inventory = firearmRow.querySelector('.inventory').innerText;
+    inventoryInput.value = inventory;
+
+    var country = firearmRow.querySelector('.country-of-origin').innerText;
+    countryInput.value = country;
+
+    var caliber = firearmRow.querySelector('.caliber').innerText;
+    caliberInput.value = caliber;
+
+    var historicDetail = firearmRow.querySelector('.history').innerText;
+    historicDetailInput.value = historicDetail;
+
+    modalForm.action = "/updateFirearm/" + firearmID;
+}
+
+
+
+{{!-- 
         window.addEventListener('DOMContentLoaded', function() {
             var updateForms = document.getElementsByClassName('update-button');
             Array.from(updateForms).forEach(function(form) {
                 form.style.display = "none";
             });
-        });
+        }); --}}
 
         function closeModal(modal)
         {

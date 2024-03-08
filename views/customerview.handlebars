@@ -11,9 +11,9 @@
     <nav>
         <img src="RTI_Logo.png" alt="RTI_Logo" class="logo">
         <a href="index.html">Home</a>
-        <a href="http://flip2.engr.oregonstate.edu:2427/Customers" id="selected-page">Customers</a>
-        <a href="http://flip2.engr.oregonstate.edu:2427/FFLS">FFLS</a>
-        <a href="firearms.html">Firearms</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/Customers" id="selected-page">Customers</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/FFLS">FFLS</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/Firearms">Firearms</a>
         <a href="transactions.html">Transactions</a>
         <a href="transactionsandfirearms.html">Transactions and Firearms</a>
     </nav>
@@ -68,7 +68,8 @@
             <label for="contact">Contact Information:</label>
             <input type="text" id="contact" required name="contact"><br><br>
             <input type="submit">
-            <button onclick="closeModal(".modal-container")">Close</button>
+            <button type="button" onclick="closeModal('.modal-container')">Close</button>
+
         </form>
     </div>
 
@@ -77,7 +78,8 @@
     </footer>
 
     <script>
-        function toggleForm(customerID) {
+        
+       function toggleForm(customerID) {
             var modalContainer = document.querySelector('.modal-container');
             var modalForm = modalContainer.querySelector('.update-form');
             var customerNameInput = modalForm.querySelector('#cname');
@@ -94,12 +96,14 @@
             modalForm.action = "/updateCustomer/" + customerID;
         }
 
-        window.addEventListener('DOMContentLoaded', function() {
+
+
+        {{!-- window.addEventListener('DOMContentLoaded', function() {
             var updateForms = document.getElementsByClassName('update-button');
             Array.from(updateForms).forEach(function(form) {
                 form.style.display = "none";
             });
-        });
+        }); --}}
 
         function closeModal(modal)
         {
