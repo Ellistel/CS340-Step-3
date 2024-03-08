@@ -24,6 +24,12 @@ let customerUpdate = `UPDATE Customers SET customerName = ?, customerContact = ?
 let fflsAdd = `INSERT INTO FFLs(fflName, fflContact) VALUES (?, ?)`
 let fflsDelete = `DELETE FROM FFLs WHERE fflicenseID = ?`
 let fflsUpdate = `UPDATE FFLs SET fflName = ?, fflContact = ? WHERE fflicenseID = ?`
+let firearmDelete = `DELETE FROM Firearms WHERE firearmID = ?`
+let transactionFirearmDelete = 'DELETE FROM Transactions_Firearms WHERE transactionsFirearmsID = ?'
+let firearmAdd = "INSERT INTO Firearms(price, model, inventoryStock, countryOfOrigin, caliber, historicDetail) VALUES (?, ?, ?, ?, ?, ?)";
+
+
+
 /*
     ROUTES
 */
@@ -120,6 +126,26 @@ app.post('/add-ffls-form', function(req,res){
     })
 })
 
+
+app.post('/add-firearm-form', function(req,res){
+    let data = req.body
+    let price = data['price']
+    let model = data['model']
+    let inventoryStock = data['inventory']
+    let country = data['country']
+    let caliber = data['caliber']
+    let detail = data['historicDetail']
+
+    db.pool.query(firearmAdd, [price, model,inventoryStock,country,caliber,detail], function(error, rows, fields){
+        if (error) {
+            console.log(error)
+            res.sendStatus(400)
+        } else {
+            res.redirect('/Firearms')
+        }
+    })
+})
+
 app.post('/deleteCustomer/:customerID', function(req, res)
     {
         let customerId = req.params.customerID
@@ -148,9 +174,31 @@ app.post('/deleteCustomer/:customerID', function(req, res)
             }
         });
     });
+
+    app.post('/deleteFirearm/:firearmID', function(req, res) {
+        let firearmID = req.params.firearmID;
     
+        // Delete referencing rows from Transactions_Firearms table
+        db.pool.query(transactionFirearmDelete, [firearmID], function(err, transactionResults, fields) {
+            if (err) {
+                console.error("Error deleting from Transactions_Firearms:", err);
+                res.sendStatus(500);
+                return;
+            }
     
-   
+            // Now delete the row from Firearms table
+            db.pool.query(firearmDelete, [firearmID], function(err, firearmResults, fields) {
+                if (err) {
+                    console.error("Error deleting from Firearms:", err);
+                    res.sendStatus(500);
+                    return;
+                }
+    
+                res.redirect("/Firearms");
+            });
+        });
+    });
+    
 
 app.post('/updateCustomer/:customerID', function(req, res)
     {
