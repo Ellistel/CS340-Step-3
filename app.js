@@ -70,17 +70,18 @@ app.get('/Firearms', function(req, res) {
     let query1 = 'SELECT * FROM Firearms'
     db.pool.query(query1, function(error, rows, fields) {
 
-        const formattedRows = rows.map(Firearms => ({
-            ID: Firearms.fflicenseID,
-            'Price': Firearms.fflName,
-            'Model': Firearms.fflContact,
-            'inventoryStock': Firearms.inventoryStock,
-            'caliber':Firearms.caliber,
-            'historicDetail':Firearms.historicDetail,
-            Actions:''
-        }))
+        const formattedRows = rows.map(firearm => ({
+            ID: firearm.firearmID,
+            Price: firearm.price,
+            Model: firearm.model,
+            Inventory: firearm.inventoryStock,
+            'Country of Origin': firearm.countryofOrigin,
+            Caliber: firearm.caliber,
+            'Historic Detail': firearm.historicDetail,
+            Actions: ''
+        }));
         // Now, pass the modified 'formattedRows' data to the rendering engine
-        res.render('firearmsview', { title: formattedRows, data: rows })
+        res.render('firearmview', { title: formattedRows, data: rows })
 
 
 
