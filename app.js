@@ -66,6 +66,27 @@ app.get('/FFLS', function(req, res) {
     })
 })
 
+app.get('/Firearms', function(req, res) {
+    let query1 = 'SELECT * FROM Firearms'
+    db.pool.query(query1, function(error, rows, fields) {
+
+        const formattedRows = rows.map(Firearms => ({
+            ID: Firearms.fflicenseID,
+            'Price': Firearms.fflName,
+            'Model': Firearms.fflContact,
+            'inventoryStock': Firearms.inventoryStock,
+            'caliber':Firearms.caliber,
+            'historicDetail':Firearms.historicDetail,
+            Actions:''
+        }))
+        // Now, pass the modified 'formattedRows' data to the rendering engine
+        res.render('firearmsview', { title: formattedRows, data: rows })
+
+
+
+    })
+})
+
 
     app.post('/add-customer-form', function(req, res) {
     let data = req.body
