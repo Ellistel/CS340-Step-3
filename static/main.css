@@ -196,6 +196,16 @@ section {
     transform: translate(-50%, -50%);
 }
 
+.insert-forms
+{
+
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .insert-customer-button{
     display: block;
     margin: 0 auto;

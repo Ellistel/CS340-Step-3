@@ -21,7 +21,7 @@
     <div class ="insert-firearm">
     <button onclick="toggleInsert()" class="insert-button">Insert a new Firearm</button>
         <div class="modal-container-insert">
-         <form id="firearm-insert-form" method="POST" class="forms" action="/add-firearm-form">
+         <form id="firearm-insert-form" method="POST" class="insert-forms" action="/add-firearm-form">
             <label for="price">Price:</label>
             <input type="number" id="price" required name="price" step="0.01"><br><br>
             <label for="model">Model:</label>
@@ -35,8 +35,8 @@
             <label for="historicDetail">Historic Detail:</label>
             <input type="text" id="historicDetail" name="historicDetail"><br><br>
             <input type="submit">
+            <button onclick="closeModal('.modal-container-insert')">Close</button>
          </form>
-         <button onclick="closeModal('.modal-container-insert')">Close</button>
         </div>
     </div>
 
