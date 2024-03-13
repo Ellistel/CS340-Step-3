@@ -160,18 +160,6 @@ app.get('/Transactions', function(req, res) {
                     return res.status(500).send('Error fetching FFL names');
                 }
 
-                const customerNamesMap = {};
-                customerNames.forEach(function(customer) {
-                    customerNamesMap[customer.customerID] = customer.customerName;
-                });
-
-
-                const fflNamesMap = {};
-                fflNames.forEach(function(ffl) {
-                    fflNamesMap[ffl.fflicenseID] = ffl.fflName;
-                });
-        
-
                 const formattedRows = rows.map(function(transaction) {
                     return {
                         ID: transaction.transactionID,
@@ -269,7 +257,7 @@ app.post('/add-transaction-form', function(req,res){
     }
     else
     {
-    db.pool.query(transactionUpdate, [parseInt(fID) + 1, parseInt(cID) + 1, amount,date,], function(error, rows, fields){
+    db.pool.query(transactionAdd, [parseInt(fID) + 1, parseInt(cID) + 1, amount,date,], function(error, rows, fields){
         if (error) {
             console.log(error)
             res.sendStatus(400)
@@ -287,7 +275,7 @@ app.post('/deleteCustomer/:customerID', function(req, res)
         console.log(req.body)
         db.pool.query(customerDelete, [customerId], function (err, results, fields){
 
-                        // Send the results to the browser
+                    
                         if(err){
                             console.log(err)
                             res.sendStatus(500)
@@ -300,7 +288,7 @@ app.post('/deleteCustomer/:customerID', function(req, res)
     app.post('/deleteFFL/:fflicenseID', function(req, res) {
         console.log(req.body);
         db.pool.query(fflsDelete, [req.params.fflicenseID], function(err, results, fields) {
-            // Send the results to the browser
+            
             if (err) {
                 console.log(err);
                 res.sendStatus(500);
@@ -313,7 +301,7 @@ app.post('/deleteCustomer/:customerID', function(req, res)
     app.post('/deleteFirearm/:firearmID', function(req, res) {
         let firearmID = req.params.firearmID;
     
-        // Delete referencing rows from Transactions_Firearms table
+        
         db.pool.query(transactionFirearmDelete, [firearmID], function(err, transactionResults, fields) {
             if (err) {
                 console.error("Error deleting from Transactions_Firearms:", err);
@@ -321,7 +309,6 @@ app.post('/deleteCustomer/:customerID', function(req, res)
                 return;
             }
     
-            // Now delete the row from Firearms table
             db.pool.query(firearmDelete, [firearmID], function(err, firearmResults, fields) {
                 if (err) {
                     console.error("Error deleting from Firearms:", err);
@@ -337,7 +324,6 @@ app.post('/deleteCustomer/:customerID', function(req, res)
     app.post('/deleteTransaction/:transactionID', function(req, res) {
         console.log(req.body);
         db.pool.query(transactionDelete, [req.params.transactionID], function(err, results, fields) {
-            // Send the results to the browser
             if (err) {
                 console.log(err);
                 res.sendStatus(500);
@@ -357,7 +343,6 @@ app.post('/updateCustomer/:customerID', function(req, res)
         let contact = data['contact']
         db.pool.query(customerUpdate, [name, contact, customerId], function (err, results, fields){
 
-                        // Send the results to the browser
                         if(err){
                             console.log(err)
                             res.sendStatus(500)
@@ -378,7 +363,6 @@ app.post('/updateFFL/:fflicenseID', function(req, res)
         let contact = data['contact']
         db.pool.query(fflsUpdate, [fname, contact, fflId], function (err, results, fields){
 
-                        // Send the results to the browser
                         if(err){
                             console.log(err)
                             res.sendStatus(500)
@@ -437,7 +421,6 @@ app.post('/updateFFL/:fflicenseID', function(req, res)
         let detail = data['historicDetail']
         db.pool.query(firearmUpdate, [price, model, inventoryStock, country, caliber, detail, firearmId], function (err, results, fields){
 
-                        // Send the results to the browser
                         if(err){
                             console.log(err)
                             res.sendStatus(500)
