@@ -33,7 +33,7 @@ CREATE OR REPLACE TABLE Transactions (
     customerID INT NOT NULL,
     saleAmount DECIMAL(19,2),
     saleDate DATE,
-    FOREIGN KEY (fflicenseID) REFERENCES FFLs(fflicenseID)
+    FOREIGN KEY (fflicenseID) REFERENCES FFLs(fflicenseID),
     FOREIGN KEY (customerID) REFERENCES Customers(customerID)
 );
 

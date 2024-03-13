@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 340 Group 114</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    <nav>
+        <img src="RTI_Logo.png" alt="RTI_Logo" class="logo">
+        <a href="index.html">Home</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/Customers">Customers</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/FFLS">FFLS</a>
+        <a href="http://flip1.engr.oregonstate.edu:2427/Firearms">Firearms</a>
+        <a href="transactions.html"  id="selected-page">Transactions</a>
+        <a href="transactionsandfirearms.html">Transactions and Firearms</a>
+    </nav>
+
+    <div class="inserttransaction">
+        <button onclick="toggleInsert()" class="insert-button">Insert a new Transaction</button>
+        <div class="modal-container-insert">
+            <form id="ffl-insert-form" method="POST" class="forms" action="/add-transaction-form">
+                <label for="customer-name">Customer Name:</label>
+                <select id="customer-name" name="customer-name">
+                    {{#each customerNames}}
+                    <option value="{{@key}}">{{customerName}}</option>
+                    {{/each}}
+                </select><br><br>
+                <label for="ffl-name">FFL Name:</label>
+                <select id="ffl-name" name="ffl-name">
+                    <option value="NULL">NULL</option>
+                    {{#each fflNames}}
+                    <option value="{{@key}}">{{fflName}}</option>
+                    {{/each}}
+                </select><br><br>
+                <label for="sale-amount">Sale Amount:</label>
+                <input type="number" id="sale-amount" required name="sale-amount" step="0.01"><br><br>
+                <label for="sale-date">Sale Date:</label>
+                <input type="date" id="date" required name="sale-date" step="0.01"><br><br>
+                <input type="submit">
+                <button type="button" onclick="closeModal('.modal-container-insert')">Close</button>
+            </form>     
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                {{#each title.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr id="transactionRow_{{this.transactionID}}">
+                <td>{{this.transactionID}}</td>
+                <td class="customer">{{this.customerName}}</td>
+                <td class="ffl">{{this.fflName}}</td>
+                <td class="amount">{{this.saleAmount}}</td>
+                <td class="date">{{this.saleDate}}</td>
+                <td>
+                    <div id="update-delete-buttons">
+                        <button onclick="toggleForm('{{this.transactionID}}')" class="update-buttons">Update Transaction</button>
+                        <form id="deleteTransactionForm" action="/deleteTransaction/{{this.transactionID}}" method="POST">
+                            <button type="submit" class="delete-buttons">Delete Transaction</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <div class="modal-container">
+    <form action="/updateTransaction/{{this.transactionID}}" class="update-form" method="POST">
+        <label for="customer-name">Customer Name:</label>
+        <select id="customer-name" name="customer-name">
+            {{#each customerNames}}
+                    <option value="{{@key}}">{{customerName}}</option>
+            {{/each}}
+        </select><br><br>
+        <label for="ffl-name">FFL Name:</label>
+        <select id="ffl-name" name="ffl-name">
+            <option value="NULL">NULL</option>
+                 {{#each fflNames}}
+                    <option value="{{@key}}">{{fflName}}</option>
+                {{/each}}
+        </select><br><br>
+        <label for="sale-amount">Sale Amount:</label>
+        <input type="number" id="sale-amount" required name="sale-amount" step="0.01"><br><br>
+        <label for="sale-date">Sale Date:</label>
+        <input type="date" id="date" required name="sale-date" step="0.01"><br><br>
+        <input type="submit">
+        <button type="button" onclick="closeModal('.modal-container')">Close</button>
+    </form>
+</div>
+
+    <footer>
+        <p>© 2024 Luke Ellister & Leo Yudelson</p>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var updateForms = document.getElementsByClassName('update-button');
+            Array.from(updateForms).forEach(function(form) {
+                form.style.display = "none";
+            });
+        });
+
+    function toggleForm(transactionID) {
+    var modalContainer = document.querySelector('.modal-container');
+    var modalForm = modalContainer.querySelector('.update-form');
+    var customerNameSelect = modalForm.querySelector('#customer-name');
+    var fflNameSelect = modalForm.querySelector('#ffl-name');
+    var saleAmountInput = modalForm.querySelector('#sale-amount');
+    var dateInput = modalForm.querySelector('#date');
+
+    modalContainer.style.display = "block";
+
+    var transactionRow = document.querySelector('#transactionRow_' + transactionID);
+    var customerName = transactionRow.querySelector('.customer').innerText;
+    var fflName = transactionRow.querySelector('.ffl').innerText;
+    var saleAmount = transactionRow.querySelector('.amount').innerText;
+    var date = transactionRow.querySelector('.date').innerText;
+    
+    Array.from(customerNameSelect.options).forEach(function(option) {
+        if (option.innerText === customerName) {
+            option.selected = true;
+        }
+    });
+
+    Array.from(fflNameSelect.options).forEach(function(option) {
+        if (fflName === "") {
+            if (option.value === "NULL") {
+                option.selected = true;
+            }
+        } 
+        else if (option.innerText === fflName) {
+            option.selected = true;
+        }
+    });
+
+    saleAmountInput.value = saleAmount;
+    dateInput.value = formattedDate
+
+    modalForm.action = "/updateTransaction/" + transactionID;
+}
+
+
+        function closeModal(modal) {
+            var modalContainer = document.querySelector(modal);
+            modalContainer.style.display = "none";
+        }
+
+        function toggleInsert() {
+            var modalContainer = document.querySelector('.modal-container-insert');
+            modalContainer.style.display = "block";
+        }
+    </script>
+</body>
+</html>
+
