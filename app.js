@@ -54,9 +54,6 @@ app.get('/Customers', function(req, res) {
         }))
         // Now, pass the modified 'formattedRows' data to the rendering engine
         res.render('customerview', { title: formattedRows, data: rows })
-
-
-
     })
 })
 
@@ -72,9 +69,6 @@ app.get('/FFLS', function(req, res) {
         }))
         // Now, pass the modified 'formattedRows' data to the rendering engine
         res.render('fflsview', { title: formattedRows, data: rows })
-
-
-
     })
 })
 
@@ -94,39 +88,8 @@ app.get('/Firearms', function(req, res) {
         }));
         // Now, pass the modified 'formattedRows' data to the rendering engine
         res.render('firearmview', { title: formattedRows, data: rows })
-
-
-
     })
 })
-// app.get('/Transactions', function(req, res) {
-//     let query1 = `
-//         SELECT Transactions.transactionID, Customers.customerName AS customerName, FFLs.fflName AS fflName, 
-//                Transactions.saleAmount, Transactions.saleDate
-//         FROM Transactions
-//         INNER JOIN Customers ON Transactions.customerID = Customers.customerID
-//         INNER JOIN FFLs ON Transactions.fflicenseID = FFLs.fflicenseID
-//     `;
-    
-//     db.pool.query(query1, function(error, rows, fields) {
-//         if (error) {
-//             console.error('Error fetching transactions:', error);
-//             return res.status(500).send('Error fetching transactions');
-//         }
-//         let query2 = 'SELECT customerID, customerName FROM Customers';
-//         let query3 = 'SELECT fflicenseID, fflName FROM FFLs';
-//         const formattedRows = rows.map(transaction => ({
-//             ID: transaction.transactionID,
-//             'Customer Name': transaction.customerName,
-//             'FFL Name': transaction.fflName, 
-//             'Sale Amount': transaction.saleAmount,
-//             'Sale Date': transaction.saleDate,
-//             Actions: ''
-//         }));
-
-//         res.render('transactionview', { title: formattedRows, data: rows });
-//     });
-// });
 
 app.get('/Transactions', function(req, res) {
     let query1 = `
@@ -165,12 +128,10 @@ app.get('/Transactions', function(req, res) {
                     customerNamesMap[customer.customerID] = customer.customerName;
                 });
 
-
                 const fflNamesMap = {};
                 fflNames.forEach(function(ffl) {
                     fflNamesMap[ffl.fflicenseID] = ffl.fflName;
                 });
-        
 
                 const formattedRows = rows.map(function(transaction) {
                     return {
@@ -194,9 +155,7 @@ app.get('/Transactions', function(req, res) {
     });
 });
 
-
-
-    app.post('/add-customer-form', function(req, res) {
+app.post('/add-customer-form', function(req, res) {
     let data = req.body
 
     let name = data['cname']
