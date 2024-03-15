@@ -61,7 +61,7 @@
         </thead>
         <tbody>
             {{#each data}}
-            <tr id="transactionRow_{{this.TransactionsAndFirearmsID}}">
+            <tr id="transactionandfirearmRow_{{this.TransactionsAndFirearmsID}}">
                 <td>{{this.TransactionsAndFirearmsID}}</td>
                 <td class="transactionID">{{this.TransactionID}}</td>
                 <td class="Firearm">{{this.FirearmModel}}</td>
@@ -70,7 +70,7 @@
                 <td class="Line-Total">{{this.LineTotal}}</td>
                 <td>
                     <div id="update-delete-buttons">
-                        <button onclick="toggleForm('{{this.transactionID}}')" class="update-buttons">Update Transaction</button>
+                        <button onclick="toggleForm('{{this.TransactionsAndFirearmsID}}')" class="update-buttons">Update Transaction</button>
                         <form id="deleteTransactionForm" action="/deleteFirearmAndTransaction/{{this.TransactionsAndFirearmsID}}" method="POST">
                             <button type="submit" class="delete-buttons">Delete Transaction</button>
                         </form>
@@ -82,26 +82,26 @@
     </table>
 
     <div class="modal-container">
-    <form action="/updateTransaction/{{this.transactionID}}" class="update-form" method="POST">
-        <label for="customer-name">Customer Name:</label>
-        <select id="customer-name" name="customer-name">
-            {{#each customerNames}}
-                    <option value="{{@key}}">{{customerName}}</option>
-            {{/each}}
-        </select><br><br>
-        <label for="ffl-name">FFL Name:</label>
-        <select id="ffl-name" name="ffl-name">
-            <option value="NULL">NULL</option>
-                 {{#each fflNames}}
-                    <option value="{{@key}}">{{fflName}}</option>
+    <form action="/updateTransactionAndFirearm/{{this.TransactionsAndFirearmsID}}" class="update-form" method="POST">
+        <label for="transaction-IDs">Transaction ID:</label>
+                <select id="transaction-IDs" name="transaction-IDs">
+                {{#each transactions}}
+                <option value="{{this.transactionID}}">{{this.transactionID}}</option>
                 {{/each}}
-        </select><br><br>
-        <label for="sale-amount">Sale Amount:</label>
-        <input type="number" id="sale-amount" required name="sale-amount" step="0.01"><br><br>
-        <label for="sale-date">Sale Date:</label>
-        <input type="date" id="date" required name="sale-date" step="0.01"><br><br>
-        <input type="submit">
-        <button type="button" onclick="closeModal('.modal-container')">Close</button>
+                </select>
+                </select><br><br>
+                <label for="firearm-name">Firearm Model:</label>
+                <select id="firearm-name" name="firearm-name">
+                    {{#each firearms}}
+                    <option value="{{@key}}">{{model}}</option>
+                    {{/each}}
+                </select><br><br>
+                <label for="unit-price">Unit Price:</label>
+                <input type="number" id="unit-price" required name="unit-price" step="0.01"><br><br>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" required name="quantity"><br><br>
+                <input type="submit">
+                <button type="button" onclick="closeModal('.modal-container')">Close</button>
     </form>
 </div>
 
@@ -116,45 +116,43 @@
                 form.style.display = "none";
             });
         });
-
-    function toggleForm(transactionID) {
+function toggleForm(transactionAndFirearmsID) {
     var modalContainer = document.querySelector('.modal-container');
     var modalForm = modalContainer.querySelector('.update-form');
-    var customerNameSelect = modalForm.querySelector('#customer-name');
-    var fflNameSelect = modalForm.querySelector('#ffl-name');
-    var saleAmountInput = modalForm.querySelector('#sale-amount');
-    var dateInput = modalForm.querySelector('#date');
+    var transactionIDSelect = modalForm.querySelector('#transaction-IDs');
+    var firearmNameSelect = modalForm.querySelector('#firearm-name');
+    var unitPriceInput = modalForm.querySelector('#unit-price');
+    var quantityInput = modalForm.querySelector('#quantity');
 
     modalContainer.style.display = "block";
 
-    var transactionRow = document.querySelector('#transactionRow_' + transactionID);
-    var customerName = transactionRow.querySelector('.customer').innerText;
-    var fflName = transactionRow.querySelector('.ffl').innerText;
-    var saleAmount = transactionRow.querySelector('.amount').innerText;
-    var date = transactionRow.querySelector('.date').innerText;
+    var transactionRow = document.querySelector('#transactionandfirearmRow_' + transactionAndFirearmsID);
+    var transactionID = transactionRow.querySelector('.transactionID').innerText;
+    var firearmName = transactionRow.querySelector('.Firearm').innerText;
+    var unitPrice = transactionRow.querySelector('.Unit-Price').innerText;
+    var quantity = transactionRow.querySelector('.Order.Quantity').innerText;
+
     
-    Array.from(customerNameSelect.options).forEach(function(option) {
-        if (option.innerText === customerName) {
+    Array.from(transactionIDSelect.options).forEach(function(option) {
+        if (option.value === transactionID) {
             option.selected = true;
         }
     });
 
-    Array.from(fflNameSelect.options).forEach(function(option) {
-        if (fflName === "") {
-            if (option.value === "NULL") {
-                option.selected = true;
-            }
-        } 
-        else if (option.innerText === fflName) {
+
+    Array.from(firearmNameSelect.options).forEach(function(option) {
+        if (option.innerText === firearmName) {
             option.selected = true;
         }
     });
 
-    saleAmountInput.value = saleAmount;
-    dateInput.value = date;
-    modalForm.action = "/updateTransaction/" + transactionID;
+    unitPriceInput.value = unitPrice;
+    quantityInput.value = quantity;
 
+   
+    modalForm.action = "/updateTransactionAndFirearm/" + transactionAndFirearmsID;
 }
+
 
 
         function closeModal(modal) {

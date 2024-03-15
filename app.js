@@ -33,6 +33,7 @@ let transactionAdd = "INSERT INTO Transactions(fflicenseID, customerID, saleAmou
 let transactionUpdate = "UPDATE Transactions SET fflicenseID = ?, customerID = ?, saleAmount = ?, saleDate = ? WHERE transactionID = ?";
 let transactionsandfirearmsAdd = "INSERT INTO Transactions_Firearms(transactionID, firearmID, orderQty, unitPrice, lineTotal) VALUES (?, ?, ?, ?, ?)";
 let transactionsandfirearmsDelete = "DELETE FROM Transactions_Firearms WHERE transactionsFirearmsID = ?";
+let transactionsandfirearmsupdate = "UPDATE Transactions_Firearms SET transactionID = ?, firearmID = ?, orderQty = ?, unitPrice = ?, lineTotal = ? WHERE transactionsFirearmsID = ?";
 
 
 
@@ -522,6 +523,28 @@ app.post('/updateFFL/:fflicenseID', function(req, res)
                         }
                         else
                         res.redirect("/Firearms")
+
+        })
+    })
+
+    app.post('/updateTransactionAndFirearm/:transactionAndFirearmsID', function(req, res)
+    {
+        let transactionandfirearmId = req.params.transactionAndFirearmsID
+
+        console.log(req.body)
+        let data = req.body
+        let tID = data['transaction-IDs']
+        let fID = parseInt(data['firearm-name'])
+        let unitPrice = data['unit-price']
+        let quantity = data['quantity']
+        db.pool.query(transactionsandfirearmsupdate, [tID, fID + 1, unitPrice, quantity, unitPrice * quantity, transactionandfirearmId], function (err, results, fields){
+
+                        if(err){
+                            console.log(err)
+                            res.sendStatus(500)
+                        }
+                        else
+                        res.redirect("/TransactionsAndFirearms")
 
         })
     })
