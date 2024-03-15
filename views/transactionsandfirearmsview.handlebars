@@ -14,36 +14,39 @@
         <a href="http://flip1.engr.oregonstate.edu:2427/Customers">Customers</a>
         <a href="http://flip1.engr.oregonstate.edu:2427/FFLS">FFLS</a>
         <a href="http://flip1.engr.oregonstate.edu:2427/Firearms">Firearms</a>
-        <a href="transactions.html" id="selected-page">Transactions</a>
-        <a href="transactionsandfirearms.html">Transactions and Firearms</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="transactionsandfirearms.html" id="selected-page">Transactions and Firearms</a>
     </nav>
 
-    <div class="inserttransaction">
-        <button onclick="toggleInsert()" class="insert-button">Insert a new Transaction</button>
+
+
+    
+    <div class="inserttransactionandfirearm">
+        <button onclick="toggleInsert()" class="insert-button">Insert a new Transaction and Firearm</button>
         <div class="modal-container-insert">
             <form id="ffl-insert-form" method="POST" class="forms" action="/add-transaction-form">
-                <label for="customer-name">Customer Name:</label>
-                <select id="customer-name" name="customer-name">
-                    {{#each customerNames}}
-                    <option value="{{@key}}">{{customerName}}</option>
+                <label for="transaction-IDs">Transaction ID:</label>
+                <select id="transaction-IDs" name="transaction-IDs">
+                    {{#each transactions}}
+                    <option value="{{@key}}">{{transactionID}}</option>
                     {{/each}}
                 </select><br><br>
-                <label for="ffl-name">FFL Name:</label>
-                <select id="ffl-name" name="ffl-name">
-                    <option value="NULL">NULL</option>
-                    {{#each fflNames}}
-                    <option value="{{@key}}">{{fflName}}</option>
+                <label for="firearm-name">Firearm Model:</label>
+                <select id="firearm-name" name="firearm-name">
+                    {{#each firearms}}
+                    <option value="{{@key}}">{{model}}</option>
                     {{/each}}
                 </select><br><br>
-                <label for="sale-amount">Sale Amount:</label>
-                <input type="number" id="sale-amount" required name="sale-amount" step="0.01"><br><br>
-                <label for="sale-date">Sale Date:</label>
-                <input type="date" id="date" required name="sale-date" step="0.01"><br><br>
+                <label for="unit-price">Unit Price:</label>
+                <input type="number" id="unit-price" required name="unit-price" step="0.01"><br><br>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" required name="quantity"><br><br>
                 <input type="submit">
                 <button type="button" onclick="closeModal('.modal-container-insert')">Close</button>
             </form>     
         </div>
     </div>
+    
 
     <table>
         <thead>
@@ -57,12 +60,12 @@
         </thead>
         <tbody>
             {{#each data}}
-            <tr id="transactionRow_{{this.transactionID}}">
-                <td>{{this.transactionID}}</td>
-                <td class="customer">{{this.customerName}}</td>
-                <td class="ffl">{{this.fflName}}</td>
-                <td class="amount">{{this.saleAmount}}</td>
-                <td class="date">{{this.saleDate}}</td>
+            <tr id="transactionRow_{{this.TransactionsAndFirearmsID}}">
+                <td>{{this.TransactionsAndFirearmsID}}</td>
+                <td class="transactionID">{{this.TransactionID}}</td>
+                <td class="Firearm">{{this.FirearmModel}}</td>
+                <td class="Unit-Price">{{this.UnitPrice}}</td>
+                <td class="Line-Total">{{this.LineTotal}}</td>
                 <td>
                     <div id="update-delete-buttons">
                         <button onclick="toggleForm('{{this.transactionID}}')" class="update-buttons">Update Transaction</button>
@@ -164,4 +167,3 @@
     </script>
 </body>
 </html>
-

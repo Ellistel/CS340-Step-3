@@ -184,6 +184,62 @@ app.get('/Transactions', function(req, res) {
 
 
 
+app.get('/TransactionsAndFirearms', function(req, res) {
+    let query1 = `SELECT Transactions_Firearms.transactionsFirearmsID AS TransactionsAndFirearmsID, 
+    Transactions.transactionID AS TransactionID, 
+    Firearms.model AS FirearmModel, 
+    Transactions_Firearms.unitPrice AS UnitPrice, 
+    Transactions_Firearms.lineTotal AS LineTotal
+FROM Transactions_Firearms
+INNER JOIN Transactions ON Transactions_Firearms.transactionID = Transactions.transactionID
+INNER JOIN Firearms ON Transactions_Firearms.firearmID = Firearms.firearmID
+ORDER BY Transactions_Firearms.transactionID;`  
+
+    let query2 = 'SELECT transactionID FROM Transactions';
+    let query3 = 'SELECT firearmID, model FROM Firearms';
+
+    // Execute all queries concurrently
+    db.pool.query(query1, function(error1, rows, fields) {
+        if (error1) {
+            console.error('Error fetching transactions:', error1);
+            return res.status(500).send('Error fetching transactions and firearms');
+        }
+
+        db.pool.query(query2, function(error2, transactionIDs) {
+            if (error2) {
+                console.error('Error fetching transaction IDs', error2);
+                return res.status(500).send('Error fetching TransactionIDs');
+            }
+
+            db.pool.query(query3, function(error3, Firearms) {
+                if (error3) {
+                    console.error('Error fetching Firearm names:', error3);
+                    return res.status(500).send('Error fetching Firearm names');
+                }
+
+                const formattedRows = rows.map(function(transactionAndFirearms) {
+                    return {
+                        ID: transactionAndFirearms.TransactionsAndFirearmsID,
+                        'Transaction ID': transactionAndFirearms.TransactionID,
+                        'Firearm Model': transactionAndFirearms.FirearmModel,
+                        'Unit Price': transactionAndFirearms.UnitPrice,
+                        'Line Total': transactionAndFirearms.LineTotal,
+                        Actions: ''
+                    };
+                });
+
+                res.render('transactionsandfirearmsview', {
+                    title: formattedRows,
+                    data: rows,
+                    transactions: transactionIDs,
+                    firearms: Firearms
+                });
+            });
+        });
+    });
+});
+
+
     app.post('/add-customer-form', function(req, res) {
     let data = req.body
 
