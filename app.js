@@ -382,17 +382,10 @@ app.post('/deleteCustomer/:customerID', function(req, res)
             }
         });
     });
-
+    
     app.post('/deleteFirearm/:firearmID', function(req, res) {
         let firearmID = req.params.firearmID;
     
-        
-        db.pool.query(transactionFirearmDelete, [firearmID], function(err, transactionResults, fields) {
-            if (err) {
-                console.error("Error deleting from Transactions_Firearms:", err);
-                res.sendStatus(500);
-                return;
-            }
     
             db.pool.query(firearmDelete, [firearmID], function(err, firearmResults, fields) {
                 if (err) {
@@ -403,7 +396,7 @@ app.post('/deleteCustomer/:customerID', function(req, res)
     
                 res.redirect("/Firearms");
             });
-        });
+  
     });
 
     app.post('/deleteTransaction/:transactionID', function(req, res) {

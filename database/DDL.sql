@@ -46,7 +46,7 @@ CREATE OR REPLACE TABLE Transactions_Firearms (
     unitPrice DECIMAL(19,2),
     lineTotal DECIMAL(19,2),
     FOREIGN KEY (transactionID) REFERENCES Transactions(transactionID) ON DELETE CASCADE,
-    FOREIGN KEY (firearmID) REFERENCES Firearms(firearmID)
+    FOREIGN KEY (firearmID) REFERENCES Firearms(firearmID) ON DELETE CASCADE
 );
 
 --Below are the insert Statements:
