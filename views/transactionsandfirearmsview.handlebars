@@ -24,12 +24,13 @@
     <div class="inserttransactionandfirearm">
         <button onclick="toggleInsert()" class="insert-button">Insert a new Transaction and Firearm</button>
         <div class="modal-container-insert">
-            <form id="ffl-insert-form" method="POST" class="forms" action="/add-transaction-form">
-                <label for="transaction-IDs">Transaction ID:</label>
+            <form id="ffl-insert-form" method="POST" class="forms" action="/add-transaction-and-firearm-form">
+               <label for="transaction-IDs">Transaction ID:</label>
                 <select id="transaction-IDs" name="transaction-IDs">
-                    {{#each transactions}}
-                    <option value="{{@key}}">{{transactionID}}</option>
-                    {{/each}}
+                {{#each transactions}}
+                <option value="{{this.transactionID}}">{{this.transactionID}}</option>
+                {{/each}}
+                </select>
                 </select><br><br>
                 <label for="firearm-name">Firearm Model:</label>
                 <select id="firearm-name" name="firearm-name">
@@ -65,11 +66,12 @@
                 <td class="transactionID">{{this.TransactionID}}</td>
                 <td class="Firearm">{{this.FirearmModel}}</td>
                 <td class="Unit-Price">{{this.UnitPrice}}</td>
+                <td class="Order Quantity">{{this.Quantity}}</td>
                 <td class="Line-Total">{{this.LineTotal}}</td>
                 <td>
                     <div id="update-delete-buttons">
                         <button onclick="toggleForm('{{this.transactionID}}')" class="update-buttons">Update Transaction</button>
-                        <form id="deleteTransactionForm" action="/deleteTransaction/{{this.transactionID}}" method="POST">
+                        <form id="deleteTransactionForm" action="/deleteFirearmAndTransaction/{{this.TransactionsAndFirearmsID}}" method="POST">
                             <button type="submit" class="delete-buttons">Delete Transaction</button>
                         </form>
                     </div>

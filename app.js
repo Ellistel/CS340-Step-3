@@ -13,7 +13,7 @@ var app = express()
 app.engine("handlebars", exphbs.engine({ defaultLayout: false }))
 app.set("view engine", "handlebars")
 
-PORT = 2429
+PORT = 2428
 
 // Database
 var db = require('./database/db-connector')
@@ -31,6 +31,8 @@ let firearmUpdate ="UPDATE Firearms SET price = ?, model = ?, inventoryStock = ?
 let transactionDelete = "DELETE FROM Transactions WHERE transactionID = ?"
 let transactionAdd = "INSERT INTO Transactions(fflicenseID, customerID, saleAmount, saleDate) VALUES (?,?,?,?)";
 let transactionUpdate = "UPDATE Transactions SET fflicenseID = ?, customerID = ?, saleAmount = ?, saleDate = ? WHERE transactionID = ?";
+let transactionsandfirearmsAdd = "INSERT INTO Transactions_Firearms(transactionID, firearmID, orderQty, unitPrice, lineTotal) VALUES (?, ?, ?, ?, ?)";
+let transactionsandfirearmsDelete = "DELETE FROM Transactions_Firearms WHERE transactionsFirearmsID = ?";
 
 
 
@@ -189,13 +191,14 @@ app.get('/TransactionsAndFirearms', function(req, res) {
     Transactions.transactionID AS TransactionID, 
     Firearms.model AS FirearmModel, 
     Transactions_Firearms.unitPrice AS UnitPrice, 
-    Transactions_Firearms.lineTotal AS LineTotal
+    Transactions_Firearms.lineTotal AS LineTotal,
+    Transactions_Firearms.orderQty as Quantity
 FROM Transactions_Firearms
 INNER JOIN Transactions ON Transactions_Firearms.transactionID = Transactions.transactionID
 INNER JOIN Firearms ON Transactions_Firearms.firearmID = Firearms.firearmID
 ORDER BY Transactions_Firearms.transactionID;`  
 
-    let query2 = 'SELECT transactionID FROM Transactions';
+    let query2 = 'SELECT transactionID FROM Transactions ORDER BY transactionID';
     let query3 = 'SELECT firearmID, model FROM Firearms';
 
     // Execute all queries concurrently
@@ -223,6 +226,7 @@ ORDER BY Transactions_Firearms.transactionID;`
                         'Transaction ID': transactionAndFirearms.TransactionID,
                         'Firearm Model': transactionAndFirearms.FirearmModel,
                         'Unit Price': transactionAndFirearms.UnitPrice,
+                        'Order Quantity': transactionAndFirearms.Quantity,
                         'Line Total': transactionAndFirearms.LineTotal,
                         Actions: ''
                     };
@@ -325,6 +329,30 @@ app.post('/add-transaction-form', function(req,res){
 })
 
 
+
+
+
+app.post('/add-transaction-and-firearm-form', function(req,res){
+    console.log(req.body)
+    let data = req.body
+    let tID = parseInt(data['transaction-IDs'])
+    let fID = parseInt(data['firearm-name'])
+    let amount = parseInt(data['unit-price'])
+    let quant = parseInt(data['quantity'])
+
+    db.pool.query(transactionsandfirearmsAdd, [tID, fID + 1, quant, amount, amount * quant,], function(error, rows, fields){
+        if (error) {
+            console.log(error)
+            res.sendStatus(400)
+        } else {
+            res.redirect('/TransactionsAndFirearms')
+        }
+    })
+    
+})
+
+
+
 app.post('/deleteCustomer/:customerID', function(req, res)
     {
         let customerId = req.params.customerID
@@ -385,6 +413,17 @@ app.post('/deleteCustomer/:customerID', function(req, res)
                 res.sendStatus(500);
             } else {
                 res.redirect("/Transactions");
+            }
+        });
+    });
+    app.post('/deleteFirearmAndTransaction/:TransactionsAndFirearmsID', function(req, res) {
+        console.log(req.body);
+        db.pool.query(transactionsandfirearmsDelete, [req.params.TransactionsAndFirearmsID], function(err, results, fields) {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            } else {
+                res.redirect("/TransactionsAndFirearms");
             }
         });
     });
